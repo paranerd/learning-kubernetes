@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-filestore-html-pv
+spec:
+  storageClassName: "fileserver"
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    namespace: default
+    name: nginx-filestore-html-pvc
+  nfs:
+    path: [YOUR_FILE_SHARE_NAME]
+    server: [YOUR_FILESTORE_INSTANCE_IP]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: nginx-filestore-html-pvc
+spec:
+  storageClassName: "fileserver"
+  volumeName: nginx-filestore-html-pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
