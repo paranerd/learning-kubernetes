@@ -13,7 +13,7 @@ spec:
     namespace: default
     name: nginx-filestore-html-pvc
   nfs:
-    path: [YOUR_FILE_SHARE_NAME]
+    path: /[YOUR_FILE_SHARE_NAME]
     server: [YOUR_FILESTORE_INSTANCE_IP]
 ---
 apiVersion: v1
