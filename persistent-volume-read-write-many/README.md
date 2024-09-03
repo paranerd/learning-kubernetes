@@ -1,4 +1,4 @@
-# Persitent Volume with ReadWriteMany access
+# Kubernetes Snippet: Persitent Volume with ReadWriteMany access
 
 This is to demonstrate how to mount a Persistent Volume with ReadWriteMany access.
 
