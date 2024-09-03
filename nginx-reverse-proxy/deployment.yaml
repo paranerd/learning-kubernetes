@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            name: config
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+        name: hello-1
+        ports:
+        - containerPort: 5000
+          protocol: 8080
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: nginx-filestore-config-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:2.0
+        name: hello-2
+        ports:
+        - containerPort: 8080
+          protocol: TCP
