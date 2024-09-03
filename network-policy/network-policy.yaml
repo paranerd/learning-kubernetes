@@ -1,0 +1,15 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: app-allow-from-nginx
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      app: app
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx
