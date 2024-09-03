@@ -14,7 +14,7 @@ spec:
     name: nginx-html-pvc
   csi:
     driver: pd.csi.storage.gke.io
-    volumeHandle: projects/[YOUR_PROJECT_ID]k/zones/[YOUR_ZONE]/disks/[YOUR_DISK_NAME] # or /regions/[YOUR_REGION]/...
+    volumeHandle: projects/[YOUR_PROJECT_ID]/zones/[YOUR_ZONE]/disks/[YOUR_DISK_NAME] # or /regions/[YOUR_REGION]/...
     fsType: ext4
 ---
 apiVersion: v1
