@@ -51,4 +51,3 @@ The following example mounts a custom `www` directory for Nginx:
     ```
 
 9. Visit the LoadBalancer's external IP to see the `index.html`
-    ```
