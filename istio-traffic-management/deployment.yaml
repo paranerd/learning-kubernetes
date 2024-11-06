@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-v1
+  labels:
+    app: hello
+    version: "1.0"
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+        version: "1.0"
+    spec:
+      containers:
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+        name: hello
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-v2
+  labels:
+    app: hello
+    version: "2.0"
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+        version: "2.0"
+    spec:
+      containers:
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:2.0
+        name: hello
+        ports:
+        - containerPort: 8080
+          protocol: TCP
