@@ -8,12 +8,13 @@ This demonstrates how to create a Network Policy. It uses 3 containers `nginx-1`
 
     ```bash
     kubectl apply -f deployment.yaml
+    ```
 
 2. Create the Service
 
     ```bash
     kubectl apply -f service.yaml
-    ````
+    ```
 
 3. Create the Network Policy
 
