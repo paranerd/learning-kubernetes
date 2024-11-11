@@ -8,7 +8,7 @@
 
     ```bash
     gcloud container clusters update standard-cluster-1 \
-    --location=us-central1-c\
+    --location=us-central1-c \
     --gateway-api=standard
     ```
 
