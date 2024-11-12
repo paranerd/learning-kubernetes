@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app: config-sync-demo-ns
+  name: config-sync-demo-ns
