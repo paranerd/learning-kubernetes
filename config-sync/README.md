@@ -13,8 +13,9 @@ Config Sync lets you use GitOps for deployment and configuration of Kubernetes C
 1. **Update repo in config files**
 
     Update the repo reference in the following files:
-        - `fleet-spec-with-git.yaml`
-        - `root-sync.yaml`
+
+    - `fleet-spec-with-git.yaml`
+    - `root-sync.yaml`
 
 1. **Enable APIs**
 
