@@ -31,7 +31,7 @@ Config Sync lets you use GitOps for deployment and configuration of Kubernetes C
 
 1. **Create Fleet**
 
-    The Cluster must be a Fleet-member as part of the requirements for ConfigSync.
+    The Cluster must be a Fleet-member as part of the requirements for Config Sync.
 
     ```bash
     gcloud container fleet create
@@ -45,29 +45,51 @@ Config Sync lets you use GitOps for deployment and configuration of Kubernetes C
       --enable-fleet
     ```
 
-1. **Enable Config Management**
+1. **Install Config Sync**
+
+    - **Via UI**
+
+        1. Go to GKE > Features > Config > Install Config Sync
+
+        1. Select the `config-sync-demo` cluster to be included
+
+        1. Click "Install Config Sync"
+
+    - **Via CLI**
+
+        ```bash
+        gcloud beta container fleet config-management enable
+        ```
+
+1. **Wait for the installation to complete**
+
+    This may take a moment...
+
+    You can check the status using this command:
 
     ```bash
-    gcloud beta container fleet config-management enable
+    gcloud beta container fleet config-management status
     ```
+
+    Continue when it shows `Status: NOT_CONFIGURED`
 
 1. **Configure Config Sync**
 
     - **Via UI**
+        
+        1. Go to GKE > Features > Config > Deploy Package
 
-      1. Go to GKE > Features > Config > Deploy Package
+        1. Select `config-sync-demo` as the cluster and continue
 
-      1. Select `config-sync-demo` as the cluster and continue
+        1. Select "Package hosted on Git" and continue
 
-      1. Select "Package hosted on Git" and continue
+        1. Fill in the form according to your setup
 
-      1. Fill in the form according to your setup
-
-      1. Click "Deploy Package"
+        1. Click "Deploy Package"
 
     - **Via Fleet Config Management**
 
-      1. **Enable ConfigSync and link the repository in a single step**
+      1. **Enable Config Sync and link the repository in a single step**
 
             ```bash
             gcloud beta container fleet config-management apply \
@@ -77,7 +99,7 @@ Config Sync lets you use GitOps for deployment and configuration of Kubernetes C
 
     - **Via `kubectl`**
 
-      1. **Enable ConfigSync without referencing a repository**
+      1. **Enable Config Sync without referencing a repository**
 
             ```bash
             gcloud beta container fleet config-management apply \
@@ -85,7 +107,7 @@ Config Sync lets you use GitOps for deployment and configuration of Kubernetes C
                 --config=fleet-spec.yaml
             ```
 
-      1. **Configure ConfigSync using `kubectl`**
+      1. **Configure Config Sync using `kubectl`**
       
             ```bash
             kubectl apply -f root-sync.yaml
