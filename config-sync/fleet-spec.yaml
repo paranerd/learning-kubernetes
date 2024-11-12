@@ -2,9 +2,3 @@ applySpecVersion: 1
 spec:
   configSync:
     enabled: true
-    sourceType: git
-    sourceFormat: hierarchy
-    syncRepo: https://github.com/user/repo
-    syncBranch: main
-    secretType: none
-    policyDir: /
