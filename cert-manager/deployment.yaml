@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-1
+spec:
+  selector:
+    matchLabels:
+      app: hello-1
+  template:
+    metadata:
+      labels:
+        app: hello-1
+    spec:
+      containers:
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+        imagePullPolicy: IfNotPresent
+        name: hello-1
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-2
+spec:
+  selector:
+    matchLabels:
+      app: hello-2
+  template:
+    metadata:
+      labels:
+        app: hello-2
+    spec:
+      containers:
+      - image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:2.0
+        imagePullPolicy: IfNotPresent
+        name: hello-2
+        ports:
+        - containerPort: 8080
+          protocol: TCP
