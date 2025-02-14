@@ -62,6 +62,14 @@ Config Connector lets you manage Google Cloud resources through Kubernetes.
     kubectl apply -f <config.yaml>
     ```
 
+1. **Delete instance**
+
+    The Config Controller Kubernetes Cluster cannot be manually deleted. It requires the following command:
+
+    ```bash
+    gcloud anthos config controller delete --location=us-central1 my-cc-cluster
+    ```
+
 ## Troubleshooting
 
 - Get logs
