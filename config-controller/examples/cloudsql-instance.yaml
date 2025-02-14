@@ -1,0 +1,15 @@
+# https://cloud.google.com/config-connector/docs/reference/resource-docs/sql/sqlinstance#annotations
+# Note: Enable 'Cloud SQL Admin API'
+
+apiVersion: sql.cnrm.cloud.google.com/v1beta1
+kind: SQLInstance
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: smec-config-connector
+  name: sqlinstance-sample-mysql
+  namespace: config-control
+spec:
+  databaseVersion: MYSQL_5_7
+  region: us-central1
+  settings:
+    tier: db-f1-micro

@@ -1,0 +1,17 @@
+# https://cloud.google.com/config-connector/docs/reference/resource-docs/bigquery/bigquerydataset
+
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+kind: BigQueryDataset
+metadata:
+  annotations:
+    cnrm.cloud.google.com/delete-contents-on-destroy: "false"
+  name: bigquerydatasetsample
+  namespace: config-control
+spec:
+  defaultTableExpirationMs: 3600000
+  description: "BigQuery Dataset Sample"
+  friendlyName: bigquerydatasetsample
+  location: US
+  projectRef:
+    # Replace ${PROJECT_ID?} with the numeric ID of the parent folder
+    external: "${PROJECT_ID?}"

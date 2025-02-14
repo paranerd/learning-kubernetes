@@ -1,0 +1,17 @@
+# https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/project
+# Note: Grant the 'resourcemanager.projectCreator' role to the Kubernetes Service Account
+
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "true"
+  labels:
+    label-one: "value-one"
+  name: project-sample-in-folder
+  namespace: config-control
+spec:
+  name: Config Connector Sample
+  folderRef:
+    # Replace ${FOLDER_ID?} with the numeric ID of the parent folder
+    external: "${FOLDER_ID?}"
