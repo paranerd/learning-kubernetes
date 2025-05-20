@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudsql-demo-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cloudsql-demo-app
+  template:
+    metadata:
+      labels:
+        app: cloudsql-demo-app
+    spec:
+      serviceAccountName: cloudsql-demo
+      containers:
+        - name: cloudsql-demo-app
+          image: us-central1-docker.pkg.dev/PROJECT_ID/cloudsql-demo/cloudsql-demo-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: database
+      initContainers:
+        - name: cloud-sql-proxy
+          restartPolicy: Always
+          # It is recommended to use the latest version of the Cloud SQL Auth Proxy
+          # Make sure to update on a regular schedule!
+          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.1
+          args:
+            # If connecting from a VPC-native GKE cluster, you can use the
+            # following flag to have the proxy connect over private IP
+            # - "--private-ip"
+
+            # If you are not connecting with Automatic IAM, you can delete
+            # the following flag.
+            #- "--auto-iam-authn"
+
+            # Enable structured logging with LogEntry format:
+            - "--structured-logs"
+
+            # Replace DB_PORT with the port the proxy should listen on
+            - "--port=3306"
+            - "PROJECT_ID:us-central1:cloudsql-demo"
+
+          securityContext:
+            # The default Cloud SQL Auth Proxy image runs as the
+            # "nonroot" user and group (uid: 65532) by default.
+            runAsNonRoot: true
+          # You should use resource requests/limits as a best practice to prevent
+          # pods from consuming too many resources and affecting the execution of
+          # other pods. You should adjust the following values based on what your
+          # application needs. For details, see
+          # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+          resources:
+            requests:
+              # The proxy's memory use scales linearly with the number of active
+              # connections. Fewer open connections will use less memory. Adjust
+              # this value based on your application's requirements.
+              memory: "2Gi"
+              # The proxy's CPU use scales linearly with the amount of IO between
+              # the database and the application. Adjust this value based on your
+              # application's requirements.
+              cpu: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudsql-demo-service
+  labels:
+    app: cloudsql-demo-app
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: cloudsql-demo-app
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloudsql-demo-ingress
+spec:
+  defaultBackend:
+    service:
+      name: cloudsql-demo-service
+      port:
+        number: 80
